@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source .env
+DB_USER="${1:?"A database user is required as the first argument."}"
+DB_PASS="${2:?"A database password is required as the second argument."}"
+DB="${3:-$user}"
+
+docker exec postgres-server psql -U "$PGUSERNAME" -c "CREATE DATABASE \"$DB\";"
+docker exec postgres-server psql -U "$PGUSERNAME" -c "CREATE USER \"$DB_USER\" WITH PASSWORD '$DB_PASS';"
+docker exec postgres-server psql -U "$PGUSERNAME" -c "GRANT ALL PRIVILEGES ON DATABASE \"$DB\" TO \"$DB_USER\";"
+docker exec postgres-server psql -U "$PGUSERNAME" -c "ALTER DATABASE \"$DB\" OWNER TO \"$DB_USER\";"
+
+# PostgreSQL 15 revokes the CREATE permission from all users except for the owner from the public schema.
+# Thus, it is simplest way to ALTER DATABASE OWNER to the new user.

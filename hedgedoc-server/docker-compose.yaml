@@ -1,0 +1,17 @@
+version: '3'
+services:
+  hedgedoc-server:
+    image: quay.io/hedgedoc/hedgedoc
+    container_name: hedgedoc-server
+    environment:
+      CMD_DB_URL: "postgresql://$DB_USER:$DB_PASS@postgres-server:5432/hedgedoc"
+      CMD_DOMAIN: localhost
+      CMD_URL_PATH: hedgedoc
+    volumes:
+      - ./default.js:/hedgedoc/lib/config/default.js
+    networks:
+      - server-compose-network
+    restart: always
+networks:
+  server-compose-network:
+    external: true
