@@ -2,8 +2,9 @@
 
 This is the centralized proxy server and database for all the servers. The main purpose of this is to add path matching functionality to the servers along with/instead of the port forwarding mechanism depending on using **`ports:`** or not. After setting admin databass credentials in *.env*, in order to launch it, run
 
-```bash 
+```bash
 docker network create server-compose-network
+docker volume create server-compose-volume
 docker-compose up -d
 ```
 
@@ -12,14 +13,14 @@ docker-compose up -d
 In order to utilize the proxy server,
 
 * Join the network **`server-compose-network`**.
-* If the database is involved, initialize the database by 
+* If the database is involved, initialize the database by
     ```bash
     ./init-db NEW_DB_USER NEW_DB_PASS [DATABASE]
     ```
     Then database will be accessible by **`postgres-server`**.
 
 * After launching the application, add a new **`location`** section for the application and reload the proxy server by
-    ```bash 
+    ```bash
     docker exec proxy-server nginx -s reload
     ```
     There are two ways to set up **`proxy_pass`**.
