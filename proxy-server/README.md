@@ -15,7 +15,7 @@ In order to utilize the proxy server,
 * Join the network **`server-compose-network`**.
 * If the database is involved, initialize the database by
     ```bash
-    ./init-db NEW_DB_USER NEW_DB_PASS [DATABASE]
+    (source .env && ./init-db NEW_DB_USER NEW_DB_PASS [DATABASE])
     ```
     Then database will be accessible by **`postgres-server`**.
 

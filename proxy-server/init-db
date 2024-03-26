@@ -3,7 +3,7 @@
 source .env
 DB_USER="${1:?"A database user is required as the first argument."}"
 DB_PASS="${2:?"A database password is required as the second argument."}"
-DB="${3:-$user}"
+DB="${3:-$DB_USER}"
 
 docker exec postgres-server psql -U "$PGUSERNAME" -c "CREATE DATABASE \"$DB\";"
 docker exec postgres-server psql -U "$PGUSERNAME" -c "CREATE USER \"$DB_USER\" WITH PASSWORD '$DB_PASS';"
